@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscaminas | Consola de desminado</title>
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="encabezado">
+        <div class="marca">
+            <span class="marca__icono">◈</span>
+            <div>
+                <h1 class="marca__titulo">Buscaminas</h1>
+                <span class="marca__subtitulo">Consola de desminado</span>
+            </div>
+        </div>
+        <nav class="navegacion">
+            <a class="nav-enlace nav-enlace--activo" href="index.html">Juego</a>
+            <a class="nav-enlace" href="contacto.html">Contacto</a>
+            <a class="nav-enlace nav-enlace--github" href="https://github.com/tu-usuario/buscaminas" target="_blank" rel="noopener">GitHub ↗</a>
+            <button class="boton-tema" id="boton-tema" type="button" aria-label="Cambiar tema">☾</button>
+        </nav>
+    </header>
+
+    <main class="principal">
+        <!-- Pantalla 1: menu inicial -->
+        <section class="pantalla" id="pantalla-menu">
+            <div class="tarjeta">
+                <h2 class="tarjeta__titulo">Nueva partida</h2>
+                <p class="tarjeta__texto">Ingresa tu nombre, elige la dificultad y comienza a despejar el campo minado.</p>
+
+                <div class="campo">
+                    <label class="campo__etiqueta" for="entrada-nombre">Nombre del jugador</label>
+                    <input class="campo__entrada" id="entrada-nombre" type="text" placeholder="Minimo 3 letras" maxlength="16" autocomplete="off">
+                    <span class="campo__error" id="error-nombre"></span>
+                </div>
+
+                <div class="dificultad">
+                    <span class="campo__etiqueta">Dificultad</span>
+                    <div class="dificultad__opciones" id="opciones-dificultad">
+                        <button class="chip chip--activo" type="button" data-dificultad="facil">
+                            <span class="chip__nombre">Facil</span>
+                            <span class="chip__detalle">9 x 9 · 10 minas</span>
+                        </button>
+                        <button class="chip" type="button" data-dificultad="medio">
+                            <span class="chip__nombre">Medio</span>
+                            <span class="chip__detalle">16 x 16 · 40 minas</span>
+                        </button>
+                        <button class="chip" type="button" data-dificultad="dificil">
+                            <span class="chip__nombre">Dificil</span>
+                            <span class="chip__detalle">16 x 30 · 99 minas</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="boton boton--primario boton--ancho" id="boton-iniciar" type="button">Iniciar partida</button>
+
+                <div class="modal__acciones">
+                    <button class="boton boton--fantasma" id="boton-como-jugar" type="button">Como jugar</button>
+                    <button class="boton boton--fantasma" id="boton-ranking-menu" type="button">Mejores tiempos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pantalla 2: juego -->
+        <section class="pantalla pantalla--juego pantalla--oculta" id="pantalla-juego">
+            <div class="hud">
+                <div class="marcador">
+                    <span class="marcador__etiqueta">Minas</span>
+                    <span class="marcador__valor" id="marcador-minas">000</span>
+                </div>
+                <div class="estado-juego">
+                    <span class="estado-juego__chip estado-juego__chip--activo" id="chip-estado">En juego</span>
+                    <span class="jugador-actual">Jugador: <strong id="etiqueta-jugador">-</strong></span>
+                </div>
+                <div class="marcador">
+                    <span class="marcador__etiqueta">Tiempo</span>
+                    <span class="marcador__valor" id="marcador-tiempo">000</span>
+                </div>
+            </div>
+
+            <div class="tablero-contenedor" id="tablero-contenedor">
+                <div class="tablero" id="tablero"></div>
+            </div>
+
+            <div class="pausa pantalla--oculta" id="panel-pausa">Partida en pausa</div>
+
+            <div class="acciones-juego">
+                <button class="boton boton--primario" id="boton-reiniciar" type="button">Reiniciar</button>
+                <button class="boton" id="boton-pausa" type="button">Pausar</button>
+                <button class="boton boton--fantasma" id="boton-menu" type="button">Menu</button>
+            </div>
+
+            <p class="ayuda-controles">Click izquierdo: revelar · Click derecho: bandera · Flechas + Enter: teclado · F: bandera</p>
+        </section>
+    </main>
+
+    <footer class="pie">
+        <span>Buscaminas · Desarrollo y Arquitecturas Web 2026</span>
+        <a href="https://github.com/tu-usuario/buscaminas" target="_blank" rel="noopener">Ver repositorio ↗</a>
+    </footer>
+
+    <!-- Modal generico: mensajes, victoria, derrota y confirmaciones -->
+    <div class="modal modal--oculto" id="modal-generico">
+        <div class="modal__caja">
+            <h3 class="modal__titulo" id="modal-titulo">Titulo</h3>
+            <p class="modal__texto" id="modal-texto">Mensaje</p>
+            <div class="modal__acciones">
+                <button class="boton boton--fantasma modal--oculto" id="modal-boton-secundario" type="button">Cancelar</button>
+                <button class="boton boton--primario" id="modal-boton-primario" type="button">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: como jugar -->
+    <div class="modal modal--oculto" id="modal-como-jugar">
+        <div class="modal__caja">
+            <h3 class="modal__titulo">Como jugar</h3>
+            <ul class="instrucciones">
+                <li><b>Objetivo:</b> revelar todas las celdas sin minas.</li>
+                <li><b>Revelar:</b> click izquierdo sobre una celda tapada.</li>
+                <li><b>Bandera:</b> click derecho (o tecla F) para marcar una mina.</li>
+                <li><b>Numeros:</b> indican cuantas minas hay en las 8 celdas vecinas.</li>
+                <li><b>Teclado:</b> flechas para mover el cursor, Enter o Espacio para revelar.</li>
+                <li><b>Victoria:</b> despejas todas las celdas seguras. <b>Derrota:</b> revelas una mina.</li>
+            </ul>
+            <div class="modal__acciones">
+                <button class="boton boton--primario" id="boton-cerrar-como-jugar" type="button">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: ranking de mejores tiempos -->
+    <div class="modal modal--oculto" id="modal-ranking">
+        <div class="modal__caja">
+            <h3 class="modal__titulo">Mejores tiempos</h3>
+            <div class="dificultad__opciones" id="ranking-tabs">
+                <button class="chip chip--activo" type="button" data-dificultad="facil">
+                    <span class="chip__nombre">Facil</span>
+                </button>
+                <button class="chip" type="button" data-dificultad="medio">
+                    <span class="chip__nombre">Medio</span>
+                </button>
+                <button class="chip" type="button" data-dificultad="dificil">
+                    <span class="chip__nombre">Dificil</span>
+                </button>
+            </div>
+            <div class="modal__lista" id="ranking-lista"></div>
+            <div class="modal__acciones">
+                <button class="boton boton--fantasma" id="boton-borrar-ranking" type="button">Borrar</button>
+                <button class="boton boton--primario" id="boton-cerrar-ranking" type="button">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/tema.js"></script>
+    <script src="js/tablero.js"></script>
+    <script src="js/juego.js"></script>
+</body>
+</html>

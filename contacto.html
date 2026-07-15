@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Buscaminas</title>
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="encabezado">
+        <div class="marca">
+            <span class="marca__icono">◈</span>
+            <div>
+                <h1 class="marca__titulo">Buscaminas</h1>
+                <span class="marca__subtitulo">Consola de desminado</span>
+            </div>
+        </div>
+        <nav class="navegacion">
+            <a class="nav-enlace" href="index.html">Juego</a>
+            <a class="nav-enlace nav-enlace--activo" href="contacto.html">Contacto</a>
+            <a class="nav-enlace nav-enlace--github" href="https://github.com/tu-usuario/buscaminas" target="_blank" rel="noopener">GitHub ↗</a>
+            <button class="boton-tema" id="boton-tema" type="button" aria-label="Cambiar tema">☾</button>
+        </nav>
+    </header>
+
+    <main class="principal">
+        <section class="contacto">
+            <div class="tarjeta">
+                <h2 class="tarjeta__titulo">Contacto</h2>
+                <p class="tarjeta__texto">Escribinos y se abrira tu aplicacion de correo con el mensaje listo para enviar.</p>
+
+                <p class="mensaje-envio mensaje-envio--oculto" id="mensaje-envio">Abriendo tu aplicacion de correo...</p>
+
+                <div class="formulario" id="formulario-contacto">
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="campo-nombre">Nombre</label>
+                        <input class="campo__entrada" id="campo-nombre" type="text" placeholder="Tu nombre" autocomplete="off">
+                        <span class="campo__error" id="error-contacto-nombre"></span>
+                    </div>
+
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="campo-mail">Mail</label>
+                        <input class="campo__entrada" id="campo-mail" type="text" placeholder="tucorreo@ejemplo.com" autocomplete="off">
+                        <span class="campo__error" id="error-contacto-mail"></span>
+                    </div>
+
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="campo-mensaje">Mensaje</label>
+                        <textarea class="campo__area" id="campo-mensaje" placeholder="Escribe tu mensaje (mas de 5 caracteres)"></textarea>
+                        <span class="campo__error" id="error-contacto-mensaje"></span>
+                    </div>
+
+                    <button class="boton boton--primario boton--ancho" id="boton-enviar" type="button">Enviar mensaje</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pie">
+        <span>Buscaminas · Desarrollo y Arquitecturas Web 2026</span>
+        <a href="https://github.com/tu-usuario/buscaminas" target="_blank" rel="noopener">Ver repositorio ↗</a>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/tema.js"></script>
+    <script src="js/contacto.js"></script>
+</body>
+</html>
